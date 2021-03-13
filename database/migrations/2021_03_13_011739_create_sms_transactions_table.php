@@ -16,12 +16,13 @@ class CreateSMSTransactionsTable extends Migration
         Schema::create('s_m_s_transactions', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('account_id')->index();
-            $table->dateTime('created_at');
+            $table->dateTime('date');
             $table->string('from', 100);
             $table->string('too', 100);
             $table->string('message');
             $table->string('source');
             $table->string('status');
+            $table->timestamps();
         });
     }
 
