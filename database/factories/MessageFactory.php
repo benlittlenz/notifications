@@ -2,7 +2,7 @@
 
 use Faker\Generator as Faker;
 
-$factory->define(App\Models\SMSTransaction::class, function (Faker $faker) {
+$factory->define(App\Models\Message::class, function (Faker $faker) {
     return [
         'date' => $faker->dateTimeThisYear('now', 'NZDT'),
         'from' => $faker->name,

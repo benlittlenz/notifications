@@ -14,9 +14,9 @@ class Account extends Model
         return $this->hasMany(Organization::class);
     }
 
-    public function sms_transactions()
+    public function messages()
     {
-        return $this->hasMany(SMSTransaction::class);
+        return $this->hasMany(Message::class);
     }
 
     public function contacts()

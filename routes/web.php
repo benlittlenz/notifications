@@ -4,8 +4,10 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\ContactsController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ImagesController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\OrganizationsController;
 use App\Http\Controllers\ReportsController;
+use App\Http\Controllers\SMSTransactionController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
 
@@ -71,33 +73,33 @@ Route::put('users/{user}/restore', [UsersController::class, 'restore'])
 
 // Organizations
 
-Route::get('organizations', [OrganizationsController::class, 'index'])
-    ->name('organizations')
+Route::get('transactions', [MessageController::class, 'index'])
+    ->name('transactions')
     ->middleware('remember', 'auth');
 
-Route::get('organizations/create', [OrganizationsController::class, 'create'])
-    ->name('organizations.create')
-    ->middleware('auth');
+// Route::get('organizations/create', [OrganizationsController::class, 'create'])
+//     ->name('organizations.create')
+//     ->middleware('auth');
 
-Route::post('organizations', [OrganizationsController::class, 'store'])
-    ->name('organizations.store')
-    ->middleware('auth');
+// Route::post('organizations', [OrganizationsController::class, 'store'])
+//     ->name('organizations.store')
+//     ->middleware('auth');
 
-Route::get('organizations/{organization}/edit', [OrganizationsController::class, 'edit'])
-    ->name('organizations.edit')
-    ->middleware('auth');
+// Route::get('organizations/{organization}/edit', [OrganizationsController::class, 'edit'])
+//     ->name('organizations.edit')
+//     ->middleware('auth');
 
-Route::put('organizations/{organization}', [OrganizationsController::class, 'update'])
-    ->name('organizations.update')
-    ->middleware('auth');
+// Route::put('organizations/{organization}', [OrganizationsController::class, 'update'])
+//     ->name('organizations.update')
+//     ->middleware('auth');
 
-Route::delete('organizations/{organization}', [OrganizationsController::class, 'destroy'])
-    ->name('organizations.destroy')
-    ->middleware('auth');
+// Route::delete('organizations/{organization}', [OrganizationsController::class, 'destroy'])
+//     ->name('organizations.destroy')
+//     ->middleware('auth');
 
-Route::put('organizations/{organization}/restore', [OrganizationsController::class, 'restore'])
-    ->name('organizations.restore')
-    ->middleware('auth');
+// Route::put('organizations/{organization}/restore', [OrganizationsController::class, 'restore'])
+//     ->name('organizations.restore')
+//     ->middleware('auth');
 
 // Contacts
 
@@ -140,12 +142,3 @@ Route::get('reports', [ReportsController::class, 'index'])
 Route::get('/img/{path}', [ImagesController::class, 'show'])->where('path', '.*');
 
 // 500 error
-
-Route::get('500', function () {
-    // Force debug mode for this endpoint in the demo environment
-    if (App::environment('demo')) {
-        Config::set('app.debug', true);
-    }
-
-    echo $fail;
-});

@@ -7,9 +7,9 @@
       </inertia-link>
     </div>
     <div class="mb-4">
-      <inertia-link class="flex items-center group py-3" :href="route('organizations')">
-        <icon name="office" class="w-4 h-4 mr-2" :class="isUrl('organizations') ? 'fill-white' : 'fill-indigo-400 group-hover:fill-white'" />
-        <div :class="isUrl('organizations') ? 'text-white' : 'text-indigo-300 group-hover:text-white'">SMS</div>
+      <inertia-link class="flex items-center group py-3" :href="route('transactions')">
+        <icon name="office" class="w-4 h-4 mr-2" :class="isUrl('transactions') ? 'fill-white' : 'fill-indigo-400 group-hover:fill-white'" />
+        <div :class="isUrl('transactions') ? 'text-white' : 'text-indigo-300 group-hover:text-white'">SMS</div>
       </inertia-link>
     </div>
     <div class="mb-4">

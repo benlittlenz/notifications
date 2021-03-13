@@ -79,27 +79,24 @@
             </thead>
             <tbody>
               <template>
-                <tr class="max-h-2 hover:bg-gray-50 cursor-pointer">
+                <tr v-for="transaction in transactions" :key="transaction.id" class="max-h-2 hover:bg-gray-50 cursor-pointer">
                   <td class="border-solid border border-gray-200">
-                    <span class="text-gray-700 px-6 py-1 flex items-center"></span>
+                    <span class="text-gray-700 px-6 py-1 flex items-center">{{transaction.date}}</span>
                   </td>
                   <td class="border-solid border border-gray-200">
-                    <span class="text-gray-700 px-6 py-1 flex items-center"></span>
+                    <span class="text-gray-700 px-6 py-1 flex items-center">{{transaction.from}}</span>
                   </td>
                   <td class="border-solid border border-gray-200">
-                    <span class="text-gray-700 px-6 py-1 flex items-center"></span>
+                    <span class="text-gray-700 px-6 py-1 flex items-center">{{transaction.to}}</span>
                   </td>
                   <td class="border-solid border border-gray-200">
-                    <span class="text-gray-700 px-6 py-1 flex items-center"></span>
+                    <span class="text-gray-700 px-6 py-1 flex items-center">{{transaction.message}}</span>
                   </td>
                   <td class="border-solid border border-gray-200">
-                    <span class="text-gray-700 px-6 py-1 flex items-center"></span>
+                    <span class="text-gray-700 px-6 py-1 flex items-center">{{transaction.source}}</span>
                   </td>
                   <td class="border-solid border border-gray-200">
-                    <span class="text-gray-700 px-6 py-1 flex items-center"></span>
-                  </td>
-                  <td class="border-solid border border-gray-200">
-                    <span class="text-gray-700 px-6 py-1 flex items-center"></span>
+                    <span class="text-gray-700 px-6 py-1 flex items-center">{{transaction.status}}</span>
                   </td>
                   <td class="border-solid border border-gray-200">
                     <div class="flex flex-col justify-center items-center">
@@ -124,9 +121,12 @@ export default {
   components: {
     Icon,
   },
+  props: {
+    transactions: Object,
+  },
 
   data: () => ({
-    columns: ['date', 'from', 'to', 'message', 'source', 'status', 'actions'],
+    columns: ['date', 'from', 'to', 'message', 'source', 'status'],
     sort: {
       column: 'date',
       direction: 'desc',
