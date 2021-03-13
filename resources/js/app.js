@@ -4,6 +4,8 @@ import PortalVue from 'portal-vue'
 import { App, plugin } from '@inertiajs/inertia-vue'
 import { InertiaProgress } from '@inertiajs/progress/src'
 
+import store from './store'
+
 Vue.config.productionTip = false
 Vue.mixin({ methods: { route: window.route } })
 Vue.use(plugin)
@@ -25,4 +27,5 @@ new Vue({
         resolveComponent: name => import(`@/Pages/${name}`).then(module => module.default),
       },
     }),
+    store
 }).$mount(el)

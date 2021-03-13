@@ -99,6 +99,9 @@
                     <span class="text-gray-700 px-6 py-1 flex items-center"></span>
                   </td>
                   <td class="border-solid border border-gray-200">
+                    <span class="text-gray-700 px-6 py-1 flex items-center"></span>
+                  </td>
+                  <td class="border-solid border border-gray-200">
                     <div class="flex flex-col justify-center items-center">
                       <span class=""><icon name="details" /> </span>
                     </div>
