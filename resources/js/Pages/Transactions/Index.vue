@@ -1,5 +1,5 @@
 <template>
-  <div class="mx-auto mt-20 w-11/12">
+  <div class="mx-auto mt-4">
     <div class="rounded-lg">
       <button class="flex mr-2 focus:cursor-pointer focus:outline-none bg-purple-400 text-white py-2 px-4 rounded-lg font-bold">
         <icon name="create" />
@@ -9,7 +9,7 @@
     <div class="flex items-center mt-4">
       <div class="flex flex-1 items-center pr-4">
         <div class="relative md:w-1/3">
-          <input type="search" class="w-full pl-10 pr-4 py-2 rounded-lg shadow focus:outline-none focus:shadow-outline text-gray-600 font-medium" placeholder="Search..." />
+          <input v-model="form.search" type="search" class="w-full pl-10 pr-4 py-2 rounded-lg shadow focus:outline-none focus:shadow-outline text-gray-600 font-medium" placeholder="Search..." />
           <div class="absolute top-0 left-0 inline-flex items-center p-2">
             <icon name="search" />
           </div>
@@ -79,24 +79,24 @@
             </thead>
             <tbody>
               <template>
-                <tr v-for="transaction in transactions" :key="transaction.id" class="max-h-2 hover:bg-gray-50 cursor-pointer">
+                <tr v-for="transaction in transactions.data" :key="transaction.id" class="max-h-2 hover:bg-gray-50 cursor-pointer">
                   <td class="border-solid border border-gray-200">
-                    <span class="text-gray-700 px-6 py-1 flex items-center">{{transaction.date}}</span>
+                    <span class="text-gray-700 px-6 py-1 flex items-center">{{ transaction.date }}</span>
                   </td>
                   <td class="border-solid border border-gray-200">
-                    <span class="text-gray-700 px-6 py-1 flex items-center">{{transaction.from}}</span>
+                    <span class="text-gray-700 px-6 py-1 flex items-center">{{ transaction.from }}</span>
                   </td>
                   <td class="border-solid border border-gray-200">
-                    <span class="text-gray-700 px-6 py-1 flex items-center">{{transaction.to}}</span>
+                    <span class="text-gray-700 px-6 py-1 flex items-center">{{ transaction.to }}</span>
                   </td>
                   <td class="border-solid border border-gray-200">
-                    <span class="text-gray-700 px-6 py-1 flex items-center">{{transaction.message}}</span>
+                    <span class="text-gray-700 px-6 py-1 flex items-center">{{ transaction.message }}</span>
                   </td>
                   <td class="border-solid border border-gray-200">
-                    <span class="text-gray-700 px-6 py-1 flex items-center">{{transaction.source}}</span>
+                    <span class="text-gray-700 px-6 py-1 flex items-center">{{ transaction.source }}</span>
                   </td>
                   <td class="border-solid border border-gray-200">
-                    <span class="text-gray-700 px-6 py-1 flex items-center">{{transaction.status}}</span>
+                    <span class="text-gray-700 px-6 py-1 flex items-center">{{ transaction.status }}</span>
                   </td>
                   <td class="border-solid border border-gray-200">
                     <div class="flex flex-col justify-center items-center">
@@ -114,23 +114,54 @@
 </template>
 
 <script>
+import pickBy from 'lodash/pickBy'
+import throttle from 'lodash/throttle'
+
 import Layout from '@/Shared/Layout'
 import Icon from '@/Shared/Icon'
+import SearchFilter from '@/Shared/SearchFilter'
+
 export default {
+  metaInfo: { title: 'Transactions' },
   layout: Layout,
   components: {
     Icon,
+    SearchFilter
   },
   props: {
     transactions: Object,
+    filters: Object,
+  },
+  data() {
+    return {
+      loading: false,
+      columns: ['date', 'from', 'to', 'message', 'source', 'status'],
+      form: {
+        search: this.filters.search,
+      },
+      sort: {
+        column: 'date',
+        direction: 'desc',
+      },
+    }
   },
 
-  data: () => ({
-    columns: ['date', 'from', 'to', 'message', 'source', 'status'],
-    sort: {
-      column: 'date',
-      direction: 'desc',
+  computed: {
+    computedTransactions() {
+      if (this.transactions.length > 0) {
+        return this.transactions
+      }
     },
-  }),
+  },
+
+  watch: {
+    form: {
+      handler: throttle(function () {
+        let query = pickBy(this.form)
+        this.$inertia.replace(this.route('transactions', Object.keys(query).length ? query : { remember: 'forget' }))
+      }, 150),
+      deep: true,
+    },
+  },
 }
 </script>
